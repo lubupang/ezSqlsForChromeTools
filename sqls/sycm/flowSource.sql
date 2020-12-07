@@ -1,4 +1,4 @@
-select queries->>'$.selfUserId' as userid,queries->>'$.cateId' as cateid ,left( replace(queries->>'$.dateRange','%7C','|'),10) as starttime,right( replace(queries->>'$.dateRange','%7C','|'),10) as endtime,jt.Ppagename,jt.subpagename,dds.getrawnum(jt.sales) as sales,dds.getrawnum(jt.uv) as uv from ods.httpdatas ,json_table(decrypted_response,'$[*]' columns(
+select queries->>'$.selfUserId' as userid,queries->>'$.cateId' as cateid ,left( replace(queries->>'$.dateRange','%7C','|'),10) as starttime,right( replace(queries->>'$.dateRange','%7C','|'),10) as endtime,jt.Ppagename,jt.subpagename,dds.getrawnum(jt.sales) as sales,dds.getrawnum(jt.uv) as uv,dds.getrawnum(jt.buyercount) as buyercount,dds.getrawnum(jt.payrate/100) as payrate from ods.httpdatas ,json_table(decrypted_response,'$[*]' columns(
 Ppagename varchar(100) path '$.pageName.value',
 nested path '$.children[*]' columns(
 subpagename varchar(100) path '$.pageName.value',
@@ -14,7 +14,7 @@ where domain='sycm.taobao.com' and `path`->>'$[1]'='rivalShop' and filename='get
 
 union all
 
-select queries->>'$.rivalUser1Id',queries->>'$.cateId',left( replace(queries->>'$.dateRange','%7C','|'),10) as starttime,right( replace(queries->>'$.dateRange','%7C','|'),10) as endtime,jt.Ppagename,jt.subpagename,dds.getrawnum(jt.sales),dds.getrawnum(jt.uv) from ods.httpdatas ,json_table(decrypted_response,'$[*]' columns(
+select queries->>'$.rivalUser1Id',queries->>'$.cateId',left( replace(queries->>'$.dateRange','%7C','|'),10) as starttime,right( replace(queries->>'$.dateRange','%7C','|'),10) as endtime,jt.Ppagename,jt.subpagename,dds.getrawnum(jt.sales),dds.getrawnum(jt.uv),dds.getrawnum(jt.buyercount) as buyercount,dds.getrawnum(jt.payrate/100) as payrate from ods.httpdatas ,json_table(decrypted_response,'$[*]' columns(
 Ppagename varchar(100) path '$.pageName.value',
 nested path '$.children[*]' columns(
 subpagename varchar(100) path '$.pageName.value',
@@ -30,7 +30,7 @@ where domain='sycm.taobao.com' and `path`->>'$[1]'='rivalShop' and filename='get
 
 union all
 
-select queries->>'$.rivalUser2Id',queries->>'$.cateId',left( replace(queries->>'$.dateRange','%7C','|'),10) as starttime,right( replace(queries->>'$.dateRange','%7C','|'),10) as endtime,jt.Ppagename,jt.subpagename,dds.getrawnum(jt.sales),dds.getrawnum(jt.uv) from ods.httpdatas ,json_table(decrypted_response,'$[*]' columns(
+select queries->>'$.rivalUser2Id',queries->>'$.cateId',left( replace(queries->>'$.dateRange','%7C','|'),10) as starttime,right( replace(queries->>'$.dateRange','%7C','|'),10) as endtime,jt.Ppagename,jt.subpagename,dds.getrawnum(jt.sales),dds.getrawnum(jt.uv),dds.getrawnum(jt.buyercount) as buyercount,dds.getrawnum(jt.payrate/100) as payrate from ods.httpdatas ,json_table(decrypted_response,'$[*]' columns(
 Ppagename varchar(100) path '$.pageName.value',
 nested path '$.children[*]' columns(
 subpagename varchar(100) path '$.pageName.value',
