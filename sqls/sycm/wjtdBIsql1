@@ -1,0 +1,13 @@
+select t1.*,t1.sales/t2.sales_ttl as r from
+(select starttime,endtime,cateid,userid,shopname,dds.getrawnum(tradeindex) as sales,dds.getrawnum(uvindex) as uv,dds.getrawnum(payByrCntIndex) as paybyrcnt,dds.getrawnum(payRateIndex/100)  as payrate from dds.data_sycm_shops where datetype='month' and cateid='201160902' and sellerType='-1' and priceseg='-1') t1
+left join
+(select starttime,endtime,cateid,sum(dds.getrawnum(tradeindex))  as sales_ttl from dds.data_sycm_shops where datetype='month' and cateid='201160902' and sellerType='-1' and priceseg='-1' group by starttime,endtime,cateid) t2
+on t1.starttime=t2.starttime and t1.endtime=t2.endtime and t1.cateid=t2.cateid
+
+union all
+select t1.*,t1.sales/t2.sales_ttl from
+(select starttime,endtime,cateid,userid,shopname,dds.getrawnum(tradeindex)  as sales,dds.getrawnum(uvindex) as uv,dds.getrawnum(payByrCntIndex) as paybyrcnt,dds.getrawnum(payRateIndex/100)  as payrate from dds.data_sycm_shops where datetype='month' and cateid='0' and sellerType='-1' and priceseg='-1' and shopname in('爱哆哆旗舰店','锦福里旗舰店','巧遇旗舰店','吾家添丁旗舰店')) t1
+left join
+(select starttime,endtime,cateid,sum(dds.getrawnum(tradeindex))  as sales_ttl from dds.data_sycm_shops where datetype='month' and cateid='0' and sellerType='-1' and priceseg='-1' and shopname in('爱哆哆旗舰店','锦福里旗舰店','巧遇旗舰店','吾家添丁旗舰店') group by starttime,endtime,cateid) t2
+on t1.starttime=t2.starttime and t1.endtime=t2.endtime and t1.cateid=t2.cateid
+#-----------吾家添丁---------#
